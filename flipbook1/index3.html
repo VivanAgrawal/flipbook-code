@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Book</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #2e3537;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .book {
+            width: 350px;
+            height: 450px;
+            position: relative;
+            transition-duration: 1s;
+            perspective: 1500px;
+        }
+        input {
+            display: none;
+        }
+        .cover, .back-cover {
+            background-color: #4173a5;
+            width: 100%;
+            height: 100%;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 0 0 5px rgb(41, 41, 41);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-origin: center left;
+        }
+        .cover {
+            position: absolute;
+            z-index: 10;
+            transition: transform 1s;
+        }
+        .cover label {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .back-cover {
+            position: relative;
+            z-index: -1;
+        }
+        .page {
+            position: absolute;
+            background-color: white;
+            width: 330px;
+            height: 430px;
+            border-radius: 0 15px 15px 0;
+            margin-top: 10px;
+            transform-origin: left;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition-duration: 1.5s;
+        }
+        .page img {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px 0 0 15px;
+            object-fit: cover;
+        }
+        .front-page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            box-sizing: border-box;
+            padding: 1rem;
+        }
+        .back-page {
+            transform: rotateY(180deg);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            z-index: 99;
+        }
+        .next, .prev {
+            position: absolute;
+            bottom: 1em;
+            cursor: pointer;
+        }
+        .next {
+            right: 1em;
+        }
+        .prev {
+            left: 1em;
+        }
+        #checkbox-cover:checked ~ .book {
+            transform: translateX(200px);
+        }
+        #checkbox-cover:checked ~ .book .cover {
+            transition: transform 1.5s, z-index 0.5s 0.5s;
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #checkbox-cover:checked ~ .book .page {
+            box-shadow: 0 0 3px rgb(99, 98, 98);
+        }
+        #checkbox-page1:checked ~ .book #page1 {
+            transform: rotateY(-180deg);
+            z-index: 2;
+        }
+        #checkbox-page2:checked ~ .book #page2 {
+            transform: rotateY(-180deg);
+            z-index: 3;
+        }
+        #checkbox-page3:checked ~ .book #page3 {
+            transform: rotateY(-180deg);
+            z-index: 4;
+        }
+        #checkbox-page4:checked ~ .book #page4 {
+            transform: rotateY(-180deg);
+            z-index: 5;
+        }
+        #checkbox-page5:checked ~ .book #page5 {
+            transform: rotateY(-180deg);
+            z-index: 6;
+        }
+        #checkbox-page6:checked ~ .book #page6 {
+            transform: rotateY(-180deg);
+            z-index: 7;
+        }
+        .add-page-form {
+            margin-top: 20px;
+            color: white;
+        }
+        .navigation-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .navigation-buttons button {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4173a5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="checkbox-cover">
+    <input type="checkbox" id="checkbox-page1">
+    <input type="checkbox" id="checkbox-page2">
+    <input type="checkbox" id="checkbox-page3">
+    <input type="checkbox" id="checkbox-page4">
+    <input type="checkbox" id="checkbox-page5">
+    <input type="checkbox" id="checkbox-page6">
+    <div class="book">
+        <div class="cover">
+            <label for="checkbox-cover"></label>
+        </div>
+        <div class="page" id="page1">
+            <div class="front-page">
+                <h2>Page 1</h2>
+                <p>This is the first page of the book.</p>
+                <label class="next" for="checkbox-page1"><i class="fas fa-chevron-right"></i></label>
+            </div>
+            <div class="back-page">
+                <img src="1.jpg">
+                <label class="prev" for="checkbox-page1"><i class="fas fa-chevron-left"></i></label>
+            </div>
+        </div>
+        <div class="page" id="page2">
+            <div class="front-page">
+                <h2>Page 2</h2>
+                <p>This is the second page of the book.</p>
+                <label class="next" for="checkbox-page2"><i class="fas fa-chevron-right"></i></label>
+            </div>
+            <div class="back-page">
+                <img src="2.jpg">
+                <label class="prev" for="checkbox-page2"><i class="fas fa-chevron-left"></i></label>
+            </div>
+        </div>
+        <div class="page" id="page3">
+            <div class="front-page">
+                <h2>Page 3</h2>
+                <p>This is the third page of the book.</p>
+                <label class="next" for="checkbox-page3"><i class="fas fa-chevron-right"></i></label>
+            </div>
+            <div class="back-page">
+                <img src="3.jpg">
+                <label class="prev" for="checkbox-page3"><i class="fas fa-chevron-left"></i></label>
+            </div>
+        </div>
+        <div class="page" id="page4">
+            <div class="front-page">
+                <h2>Page 4</h2>
+                <p>This is the fourth page of the book.</p>
+                <label class="next" for="checkbox-page4"><i class="fas fa-chevron-right"></i></label>
+            </div>
+            <div class="back-page">
+                <img src="4.jpg">
+                <label class="prev" for="checkbox-page4"><i class="fas fa-chevron-left"></i></label>
+            </div>
+        </div>
+        <div class="page" id="page5">
+            <div class="front-page">
+                <h2>Page 5</h2>
+                <p>This is the fifth page of the book.</p>
+                <label class="next" for="checkbox-page5"><i class="fas fa-chevron-right"></i></label>
+            </div>
+            <div class="back-page">
+                <img src="5.jpg">
+                <label class="prev" for="checkbox-page5"><i class="fas fa-chevron-left"></i></label>
+            </div>
+        </div>
+        <div class="page" id="page6">
+            <div class="front-page">
+                <h2>Page 6</h2>
+                <p>This is the sixth page of the book.</p>
+                <label class="next" for="checkbox-page6"><i class="fas fa-chevron-right"></i></label>
+            </div>
+            <div class="back-page">
+                <img src="6.jpg">
+                <label class="prev" for="checkbox-page6"><i class="fas fa-chevron-left"></i></label>
+            </div>
+        </div>
+        <div class="back-cover"></div>
+    </div>
+    <div class="add-page-form">
+        <input type="file" id="image-upload" accept="image/*" style="display: none;">
+        <button onclick="document.getElementById('image-upload').click()">Add Image Page</button>
+    </div>
+    <div class="navigation-buttons">
+        <button id="prev-button">Previous</button>
+        <button id="next-button">Next</button>
+    </div>
+
+    <script>
+        let pageCount = 6; // Starting with 6 pages
+        let currentPage = 0; // 0 = cover, 1 = page1, 2 = page2, etc.
+
+        document.getElementById('image-upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    addPageWithImage(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function addPageWithImage(imageSrc) {
+            pageCount++;
+            const newPage = document.createElement('div');
+            newPage.classList.add('page');
+            newPage.id = `page${pageCount}`;
+            newPage.innerHTML = `
+                <div class="front-page">
+                    <h2>Page ${pageCount}</h2>
+                    <p>This is a new page with an image.</p>
+                    <label class="next" for="checkbox-page${pageCount}"><i class="fas fa-chevron-right"></i></label>
+                </div>
+                <div class="back-page">
+                    <img src="${imageSrc}">
+                    <label class="prev" for="checkbox-page${pageCount}"><i class="fas fa-chevron-left"></i></label>
+                </div>
+            `;
+            document.querySelector('.book').insertBefore(newPage, document.querySelector('.back-cover'));
+
+            const newCheckbox = document.createElement('input');
+            newCheckbox.type = 'checkbox';
+            newCheckbox.id = `checkbox-page${pageCount}`;
+            document.body.insertBefore(newCheckbox, document.querySelector('.add-page-form'));
+        }
+
+        document.getElementById('next-button').addEventListener('click', function() {
+            if (currentPage === 0) {
+                // Flip the cover first
+                document.getElementById('checkbox-cover').checked = true;
+                currentPage = 1;
+            } else if (currentPage < pageCount) {
+                // Flip the next page
+                currentPage++;
+                document.getElementById(`checkbox-page${currentPage}`).checked = true;
+            }
+        });
+
+        document.getElementById('prev-button').addEventListener('click', function() {
+            if (currentPage > 1) {
+                // Flip the previous page
+                document.getElementById(`checkbox-page${currentPage}`).checked = false;
+                currentPage--;
+            } else if (currentPage === 1) {
+                // Flip back to the cover
+                document.getElementById('checkbox-cover').checked = false;
+                currentPage = 0;
+            }
+        });
+    </script>
+</body>
+</html>
